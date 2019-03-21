@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IonContent } from '@ionic/angular';
 
 @Component({
   templateUrl: 'time-entry-edit.html',
   styleUrls: ['./time-entry-edit.scss']
 })
 export class TimeEntryEditComponent implements OnInit {
+
+  @ViewChild(IonContent) content: IonContent;
 
   public form: FormGroup;
   public submitAttempt = false;
@@ -56,6 +59,10 @@ export class TimeEntryEditComponent implements OnInit {
       duration: [duration],
       billable: [billable],
       note: [note]
+    });
+
+    window.addEventListener('keyboardDidShow', () => {
+      this.content.scrollToBottom()
     });
 
   }
