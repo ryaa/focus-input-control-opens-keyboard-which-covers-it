@@ -1,0 +1,12 @@
+{
+  "appId": "io.capacitor.bug1331",
+  "appName": "Test",
+  "bundledWebRuntime": false,
+  "webDir": "www",
+  "plugins": {
+    "Keyboard": {
+      "resize": "native",
+      "style": "dark"
+    }
+  }
+}

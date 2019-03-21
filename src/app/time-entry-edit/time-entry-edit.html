@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="form" *ngIf="form" novalidate>
+
+    <ion-item>
+      <ion-label position="stacked">Test 1</ion-label>
+      <ion-textarea class="form-item" formControlName="test1"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Test 2</ion-label>
+      <ion-textarea class="form-item" formControlName="test2"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Test 3</ion-label>
+      <ion-textarea class="form-item" formControlName="test3"></ion-textarea>
+    </ion-item>
+
+    <ion-item [class.invalid]="!form.controls['date'].valid && (form.controls['date'].touched || form.controls['date'].dirty || submitAttempt)">
+      <ion-label position="stacked">Date
+        <span class="required">*</span>
+      </ion-label>
+      <ion-datetime class="form-item" formControlName="date" pickerFormat="MM/DD/YYYY" displayFormat="DDD, D MMM YYYY"></ion-datetime>
+      <p item-content *ngIf="form.controls['date'].hasError('required') && (form.controls['date'].touched || form.controls['date'].dirty || submitAttempt)" class="danger">This field is required.</p>
+      <p item-content *ngIf="form.controls['date'].hasError('server') && (form.controls['date'].touched || form.controls['date'].dirty || submitAttempt)" ion-text class="danger">{{ form.controls['date'].errors['server'] }}</p>
+    </ion-item>
+
+    <ion-item [class.invalid]="!form.controls['task_id'].valid && (form.controls['task_id'].touched || form.controls['task_id'].dirty || submitAttempt)">
+      <ion-label position="stacked">Task</ion-label>
+      <ion-select class="form-item" [ngClass]="{ 'ion-select-with-value': form.controls['task_id'].value }" formControlName="task_id" [interfaceOptions]="{ cssClass: 'select' }" placeholder="Please select">
+        <ion-select-option [value]="option.id" *ngFor="let option of tasksLookUp">
+          {{ option.title }}
+        </ion-select-option>
+      </ion-select>
+      <div item-content slot="end" class="ion-select-clear-control" *ngIf="form.controls['task_id'].value">
+        <ion-button (click)="form.controls['task_id'].setValue(null); form.controls['task_id'].markAsDirty();">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </div>
+      <p item-content *ngIf="form.controls['task_id'].hasError('server') && (form.controls['task_id'].touched || form.controls['task_id'].dirty || submitAttempt)" ion-text class="danger">{{ form.controls['task_id'].errors['server'] }}</p>
+    </ion-item>
+
+    <ion-item [class.invalid]="!form.controls['duration'].valid">
+      <ion-label position="stacked">Time</ion-label>
+      <ion-select class="form-item" formControlName="duration" [interfaceOptions]="{ cssClass: 'select' }">
+        <ion-select-option [value]="option.duration" *ngFor="let option of times">
+          {{ option.durationAsText }}
+        </ion-select-option>
+      </ion-select>
+      <p item-content *ngIf="form.controls['duration'].hasError('server') && (form.controls['duration'].touched || form.controls['duration'].dirty || submitAttempt)" ion-text class="danger">{{ form.controls['duration'].errors['server'] }}</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Billable?</ion-label>
+      <div item-content>
+        <ion-checkbox formControlName="billable"></ion-checkbox>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Note</ion-label>
+      <ion-textarea class="form-item" formControlName="note"></ion-textarea>
+    </ion-item>
+
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid class="button-group">
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" color="light" (click)="cancel()">Cancel</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" (click)="save()">Save</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
